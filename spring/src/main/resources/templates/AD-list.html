@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="frag :: head(title='Attendance_Slots')"></head>
+<body>
+<div th:replace="frag :: header(title='Attendance_Slots')"></div>
+<div class="container-fluid row mt-2">
+    <nav th:replace="frag :: menu"></nav>
+    <main class="col-md-10">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title float-left">
+                    Attendance Detail
+                </h3>
+                <div class="clearfix"></div>
+                <div class="alert alert-success d-none" role="alert" id="messageSuccess"></div>
+                <div class="alert alert-danger d-none" role="alert" id="messageError"></div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="row">
+                        <th class="col-md-2">RollNumber</th>
+                        <th class="col-md-2">Name</th>
+                        <th class="col-md-2">Present</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ad : ${pagination.getContent()}" class="row">
+                        <td class="col-md-2" th:text="${ad.student.student_id}"></td>
+                        <td class="col-md-2" th:text="${ad.student.name}"></td>
+                        <td><input type="checkbox" class="check-item" th:value="${ad.student.student_id}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="float-right" th:if="${pagination.getTotalPages() > 1}">
+                            <ul class="pagination">
+                                <li class="page-item" th:if="${page > 1}">
+                                    <a class="page-link" th:href="@{/AD/list(page=${page}-1, limit=${limit})}">Previous</a>
+                                </li>
+                                <li class="page-item" th:if="${page>1}">
+                                    <a class="page-link" th:href="@{/AD/list(page=${page}-1, limit=${limit})}" th:text="${page}-1"></a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#" th:text="${page}"></a></li>
+                                <li class="page-item" th:if="${page < pagination.getTotalPages()}">
+                                    <a class="page-link" th:href="@{/AD/list(page=${page}+1, limit=${limit})}" th:text="${page}+1"></a>
+                                </li>
+                                <li class="page-item" th:if="${page<pagination.getTotalPages()}">
+                                    <a class="page-link" th:href="@{/AD/list(page=${page}+1, limit=${limit})}">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div style="float: right">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btnDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div th:replace="frag :: footer"></div>
+</body>
+</html>
